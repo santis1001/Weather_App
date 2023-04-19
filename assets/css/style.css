@@ -1,0 +1,17 @@
+header{
+    margin: 0;
+    padding: 5px;
+    background-image: linear-gradient(to right, #677AB9, #261360);   
+}
+header div{
+    display: flex;
+    justify-content: center;
+}
+header h2{
+    font-weight: bold;
+    color: white;
+}
+.bg-weather{
+    background-color: #261360;
+    color: white;
+}
