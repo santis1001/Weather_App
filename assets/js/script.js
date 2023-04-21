@@ -29,9 +29,10 @@ var doc_today_temp = document.getElementById('temp');
 var doc_today_wind = document.getElementById('wind');
 var doc_today_humd = document.getElementById('humd');
 
-
+// localStorage.clear();
 var Selected_city_name ;
 var autocomlete_city = [];
+var historyCity = [];
 var city_list = [];
 var Selected_city_info = {};
 var Selected_city_today = {};
@@ -39,66 +40,22 @@ var Selected_city_5day = [];
 
 var btn_array;
 
-btn_array = JSON.parse(localStorage.getItem('Historial'));
+btn_array = JSON.parse(localStorage.getItem('OBJHistory'));
+historyCity =JSON.parse(localStorage.getItem('CityHistory'));
+if(historyCity==null){
+    historyCity=[];
+}
 if(btn_array==null){
     btn_array = [];    
 }else{
-    render_btn();
-}
-
-
-
-$( function () {
-    data = fetch(mockAPI1)
-    .then(response => response.json())
-    .then(obj =>{
-        data = JSON.parse(JSON.stringify(obj));
-        console.log(data);
-        todayCast(data);
-    });
-});
-
-$( function () {
-    data = fetch(mockAPI5)
-    .then(response => response.json())
-    .then(obj =>{
-        data = JSON.parse(JSON.stringify(obj));
-        //console.log(data.list);
-        Five_dayCast(data.list);
-    });
-});
-function search_param (src_data, src){
-    //console.log(src_data.type +' '+src);
-    var value_search = document.getElementById('search_bar');
-    if(src_data.type == 'click' && src=='btn'){ 
-        //console.log('entro');
-        if(value_search!= null){
-            search_fetch(value_search.value);
-            search_btn.setAttribute('value', '');
-            value_search.value = '';
-        }        
-        search_btn.setAttribute('class', 'mt-2 w-100 btn btn-primary disabled');
-    }else if(src_data.type == 'click' && src=='bar'){
-        search_btn.setAttribute('class', 'mt-2 w-100 btn btn-primary');
-    }
-}
-function search_fetch(input_data){
-    
-    const index =  autocomlete_city.indexOf(input_data);
     Selected_city_info = {
-        name:city_list[index].city_ascii,
-        lat:city_list[index].lat, 
-        lng: city_list[index].lng,
-        country: city_list[index].iso2
+        name:btn_array[0].name,
+        lat:btn_array[0].lat, 
+        lng: btn_array[0].lng,
+        country: btn_array[0].country
     };
-    console.log(Selected_city_info);   
-
-    const exist = btn_array.indexOf(Selected_city_info);
-    console.log(exist);
-    
-    btn_array = JSON.parse(localStorage.getItem('Historial'));
-    btn_array.push(Selected_city_info);
-    localStorage.setItem('Historial', JSON.stringify(btn_array));
+    console.log(Selected_city_info);
+    search_weather_info(Selected_city_info);
 
     render_btn();
 }
@@ -130,6 +87,90 @@ $(
     }
 );
 
+
+
+
+function call_API1(web) {
+    data = fetch(web)
+    .then(response => response.json())
+    .then(obj =>{
+        data = JSON.parse(JSON.stringify(obj));
+        todayCast(data);
+    });
+} 
+function call_API5(web){
+    data = fetch(web)
+    .then(response => response.json())
+    .then(obj =>{
+        data = JSON.parse(JSON.stringify(obj));
+        //console.log(data.list);
+        Five_dayCast(data.list);
+    });
+}
+function search_param (src_data, src){
+    //console.log(src_data.type +' '+src);
+    var value_search = document.getElementById('search_bar');
+    if(src_data.type == 'click' && src=='btn'){ 
+        //console.log('entro');
+        if(value_search!= null){
+            search_fetch(value_search.value);
+            search_btn.setAttribute('value', '');
+            value_search.value = '';
+        }        
+        search_btn.setAttribute('class', 'mt-2 w-100 btn btn-primary disabled');
+    }else if(src_data.type == 'click' && src=='bar'){
+        search_btn.setAttribute('class', 'mt-2 w-100 btn btn-primary');
+    }
+}
+function search_fetch(input_data){
+    
+    const index =  autocomlete_city.indexOf(input_data);
+    
+    Selected_city_info = {
+            name:city_list[index].city_ascii,
+            lat:city_list[index].lat, 
+            lng: city_list[index].lng,
+            country: city_list[index].iso2
+        };
+    
+    if(historyCity.indexOf(input_data)==(-1)){
+        historyCity.push(input_data);
+        console.log(historyCity);
+        localStorage.setItem('CityHistory', JSON.stringify(historyCity));
+
+        console.log(Selected_city_info);   
+            
+        btn_array = JSON.parse(localStorage.getItem('OBJHistory'));
+        if(btn_array==null){        
+            btn_array=[];
+        }
+
+        btn_array.push(Selected_city_info);
+        console.log(btn_array);
+        localStorage.setItem('OBJHistory', JSON.stringify(btn_array));
+        
+        render_btn();
+
+    }
+
+    search_weather_info(Selected_city_info);
+    
+}
+function search_weather_info(city_info){
+
+    webAPI5 = 'https://api.openweathermap.org/data/2.5/forecast?lat='+city_info.lat+'&lon='+city_info.lng+'&appid='+appid+'&units=metric'
+    webAPI1 = 'https://api.openweathermap.org/data/2.5/weather?lat='+city_info.lat+'&lon='+city_info.lng+'&appid='+appid+'&units=metric'
+
+    console.log(webAPI1);
+    console.log(webAPI5);
+    
+    call_API1(webAPI1);
+    call_API5(webAPI5);
+}
+
+
+
+
 function render_btn(){
     doc_btn_list.innerHTML = '';
 
@@ -137,8 +178,14 @@ function render_btn(){
         var btn = document.createElement('button');
         btn.setAttribute('class','btn btn-secondary');
         btn.setAttribute('type', 'button');
-        btn.setAttribute('id',''+btn_array[i].name+', '+btn_array[i].country);
+        btn.setAttribute('id',''+btn_array[i].name+'-'+btn_array[i].country);
         btn.textContent = ''+btn_array[i].name+', '+btn_array[i].country;
+        var str = btn_array[i].name+', '+btn_array[i].country;
+        doc_btn_list.appendChild(btn);
+        $('#'+btn_array[i].name+'-'+btn_array[i].country).on('click', function(event){
+            console.log(str);
+            search_fetch(str);
+        });
 
     }
 
@@ -158,7 +205,7 @@ function todayCast(data){
 
 }
 function render_today(){
-    doc_today_city.textContent = '('+Selected_city_today.date+')';
+    doc_today_city.textContent = Selected_city_info.name+', '+Selected_city_info.country+' ('+Selected_city_today.date+')';
     doc_today_icon.setAttribute('src',''+Selected_city_today.icon);
     doc_today_icon.setAttribute('alt',''+Selected_city_today.desc);
     doc_today_temp.textContent = 'Temp: '+Selected_city_today.temp+' °C';
@@ -173,7 +220,7 @@ function Five_dayCast(data){
     data.forEach(element => {
         if(dayjs.unix(element.dt).format('H') == 12){
 
-            // console.log(dayjs.unix(element.dt).format('MM/D/YYYY hh:mm:ss a '));
+            //console.log(element.dt);
             // console.log(element);
             var Selected_city_week = {
                 date: dayjs.unix(element.dt).format('MM/D/YYYY'),
