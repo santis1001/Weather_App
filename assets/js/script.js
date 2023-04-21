@@ -175,11 +175,10 @@ function render_btn(){
         btn.setAttribute('type', 'button');
         btn.setAttribute('id',''+btn_array[i].name+'-'+btn_array[i].country);
         btn.textContent = ''+btn_array[i].name+', '+btn_array[i].country;
-        var str = btn_array[i].name+', '+btn_array[i].country;
         doc_btn_list.appendChild(btn);
         $('#'+btn_array[i].name+'-'+btn_array[i].country).on('click', function(event){
-            console.log(str);
-            search_fetch(str);
+            console.log(event.target.innerText);
+            search_fetch(event.target.innerText);
         });
 
     }
