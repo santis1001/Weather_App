@@ -177,6 +177,7 @@ function render_btn(){
         btn.textContent = ''+btn_array[i].name+', '+btn_array[i].country;
         doc_btn_list.appendChild(btn);
         $('#'+btn_array[i].name+'-'+btn_array[i].country).on('click', function(event){
+            event.preventDefault();
             console.log(event.target.innerText);
             search_fetch(event.target.innerText);
         });
