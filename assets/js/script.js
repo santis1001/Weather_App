@@ -88,9 +88,6 @@ $(
     }
 );
 
-
-
-
 function call_API1(web) {
     data = fetch(web)
     .then(response => response.json())
@@ -168,9 +165,6 @@ function search_weather_info(city_info){
     call_API1(webAPI1);
     call_API5(webAPI5);
 }
-
-
-
 
 function render_btn(){
     doc_btn_list.innerHTML = '';
