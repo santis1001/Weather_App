@@ -44,7 +44,8 @@ btn_array = JSON.parse(localStorage.getItem('OBJHistory'));
 historyCity =JSON.parse(localStorage.getItem('CityHistory'));
 if(historyCity==null){
     historyCity=[];
-}
+}    console.log(historyCity);
+
 if(btn_array==null){
     btn_array = [];    
 }else{
@@ -54,7 +55,7 @@ if(btn_array==null){
         lng: btn_array[0].lng,
         country: btn_array[0].country
     };
-    console.log(Selected_city_info);
+    console.log(btn_array);
     search_weather_info(Selected_city_info);
 
     render_btn();
@@ -131,8 +132,8 @@ function search_fetch(input_data){
             lat:city_list[index].lat, 
             lng: city_list[index].lng,
             country: city_list[index].iso2
-        };
-    
+        };        
+    console.log(historyCity.indexOf(input_data));
     if(historyCity.indexOf(input_data)==(-1)){
         historyCity.push(input_data);
         console.log(historyCity);
@@ -161,8 +162,8 @@ function search_weather_info(city_info){
     webAPI5 = 'https://api.openweathermap.org/data/2.5/forecast?lat='+city_info.lat+'&lon='+city_info.lng+'&appid='+appid+'&units=metric'
     webAPI1 = 'https://api.openweathermap.org/data/2.5/weather?lat='+city_info.lat+'&lon='+city_info.lng+'&appid='+appid+'&units=metric'
 
-    console.log(webAPI1);
-    console.log(webAPI5);
+    // console.log(webAPI1);
+    // console.log(webAPI5);
     
     call_API1(webAPI1);
     call_API5(webAPI5);
