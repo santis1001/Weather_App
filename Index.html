@@ -47,11 +47,15 @@
                 </div>     
                 
                 <div class="col-8 me-3 mt-3">
-                    <div class="border border-dark" >
-                        <h2 class="form-label fw-bold">Atlanta (9/13/2022)</h2>
-                        <h4 class="form-label ">Temp:</h4>
-                        <h4 class="form-label ">Wind:</h4>
-                        <h4 class="form-label ">Humidity:</h4>
+                    <div id="today_cast" class="border border-dark ps-3" >
+                        <div class="row row-cols-auto d-flex align-items-center">
+                            <h2 id="City" class="col form-label fw-bold ">Atlanta (9/13/2022)</h2>
+                            <img id="Main_icon" class="col p-0" style="height: 75px; width: 75px;" src="https://openweathermap.org/img/wn/10d@2x.png" alt="">
+                        </div>
+                        
+                        <h4 id="temp" class="form-label ">Temp:</h4>
+                        <h4 id="wind" class="form-label ">Wind:</h4>
+                        <h4 id="humd" class="form-label ">Humidity:</h4>
                     </div>
                     <div class="p-2 mb-3">
                         <label class="form-label h4 fw-bold">5 Day Forecast:</label>

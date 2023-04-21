@@ -7,45 +7,28 @@ var mockAPI1 = './assets/js/mock_data1.json'
 
 var lat = 41.8338;
 var lon = -88.0616;
-var webAPI = 'https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+appid+'&units=metric'
-var webAPI = 'https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+appid+'&units=metric'
+var webAPI5 = 'https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+appid+'&units=metric'
+var webAPI1 = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+appid+'&units=metric'
 
-console.log(webAPI);
+//console.log(webAPI1);
 
-/*fetch(webAPI)
-    .then(response => response.json())
-    .then(data => {
-        console.log(JSON.stringify(data));
-    })
-    .catch(error => console.error('Error loading JSON file:', error)); 
-    */
-// var data;
-
-$( function () {
-    data = fetch(mockAPI1)
-    .then(response => response.json())
-    .then(obj =>{
-        data = JSON.parse(JSON.stringify(obj));
-        console.log(data);
-    });
-});
-
-$( function () {
-    data = fetch(mockAPI5)
-    .then(response => response.json())
-    .then(obj =>{
-        data = JSON.parse(JSON.stringify(obj));
-        console.log(data.list);
-        Five_dayCast(data.list);
-    });
-});
-
+var k = -273.15;
 var search_btn = document.getElementById('search_btn');
 var search_bar = document.getElementById('search_bar');
 $('#search_btn').on('click', function(event){search_param(event, 'btn') });
 $('#search_bar').on('click', function(event){search_param(event, 'bar') });
 
+var doc_btn_list = document.getElementById('buttonCity_list');
+
+var doc_today_cast = document.getElementById('today_cast');
 var doc_5day_cast = document.getElementById('5day_cast');
+
+var doc_today_city = document.getElementById('City');
+var doc_today_icon = document.getElementById('Main_icon');
+var doc_today_temp = document.getElementById('temp');
+var doc_today_wind = document.getElementById('wind');
+var doc_today_humd = document.getElementById('humd');
+
 
 var Selected_city_name ;
 var autocomlete_city = [];
@@ -54,6 +37,36 @@ var Selected_city_info = {};
 var Selected_city_today = {};
 var Selected_city_5day = [];
 
+var btn_array;
+
+btn_array = JSON.parse(localStorage.getItem('Historial'));
+if(btn_array==null){
+    btn_array = [];    
+}else{
+    render_btn();
+}
+
+
+
+$( function () {
+    data = fetch(mockAPI1)
+    .then(response => response.json())
+    .then(obj =>{
+        data = JSON.parse(JSON.stringify(obj));
+        console.log(data);
+        todayCast(data);
+    });
+});
+
+$( function () {
+    data = fetch(mockAPI5)
+    .then(response => response.json())
+    .then(obj =>{
+        data = JSON.parse(JSON.stringify(obj));
+        //console.log(data.list);
+        Five_dayCast(data.list);
+    });
+});
 function search_param (src_data, src){
     //console.log(src_data.type +' '+src);
     var value_search = document.getElementById('search_bar');
@@ -76,11 +89,18 @@ function search_fetch(input_data){
         name:city_list[index].city_ascii,
         lat:city_list[index].lat, 
         lng: city_list[index].lng,
-        contry: city_list[index].iso2
+        country: city_list[index].iso2
     };
-    console.log(Selected_city_info);
+    console.log(Selected_city_info);   
 
+    const exist = btn_array.indexOf(Selected_city_info);
+    console.log(exist);
+    
+    btn_array = JSON.parse(localStorage.getItem('Historial'));
+    btn_array.push(Selected_city_info);
+    localStorage.setItem('Historial', JSON.stringify(btn_array));
 
+    render_btn();
 }
 
 $(
@@ -110,6 +130,43 @@ $(
     }
 );
 
+function render_btn(){
+    doc_btn_list.innerHTML = '';
+
+    for(var i =0;i<btn_array.length;i++){
+        var btn = document.createElement('button');
+        btn.setAttribute('class','btn btn-secondary');
+        btn.setAttribute('type', 'button');
+        btn.setAttribute('id',''+btn_array[i].name+', '+btn_array[i].country);
+        btn.textContent = ''+btn_array[i].name+', '+btn_array[i].country;
+
+    }
+
+}
+
+function todayCast(data){
+    Selected_city_today = {
+        date: dayjs.unix(data.dt).format('MM/D/YYYY'),
+        icon: 'https://openweathermap.org/img/wn/'+data.weather[0].icon+'@2x.png',
+        desc: data.weather[0].description,
+        temp: data.main.temp,
+        wind: data.wind.speed,
+        humd: data.main.humidity
+    };
+
+    render_today();
+
+}
+function render_today(){
+    doc_today_city.textContent = '('+Selected_city_today.date+')';
+    doc_today_icon.setAttribute('src',''+Selected_city_today.icon);
+    doc_today_icon.setAttribute('alt',''+Selected_city_today.desc);
+    doc_today_temp.textContent = 'Temp: '+Selected_city_today.temp+' °C';
+    doc_today_wind.textContent = 'Wind: '+Selected_city_today.wind+' Km/h';
+    doc_today_humd.textContent = 'Humidity: '+Selected_city_today.humd+'%';
+
+}
+
 function Five_dayCast(data){
 
     Selected_city_5day = [];
@@ -130,11 +187,9 @@ function Five_dayCast(data){
         }
     });
     
-    console.log(Selected_city_5day);
+    //console.log(Selected_city_5day);
     render_5day();
 }
-
-
 
 function render_5day(){
     doc_5day_cast.innerHTML = '';
@@ -155,13 +210,13 @@ function render_5day(){
         icon.setAttribute('alt',''+Selected_city_5day[i].desc);
 
         var temp = document.createElement('h6');
-        temp.textContent = 'Temp: '+Selected_city_5day[i].temp;
+        temp.textContent = 'Temp: '+Selected_city_5day[i].temp+' °C';
         
         var wind = document.createElement('h6');
-        wind.textContent = 'Wind: '+Selected_city_5day[i].wind;
+        wind.textContent = 'Wind: '+Selected_city_5day[i].wind+' Km/h';
         
         var humd = document.createElement('h6');
-        humd.textContent = 'Humidity: '+Selected_city_5day[i].humd;
+        humd.textContent = 'Humidity: '+Selected_city_5day[i].humd+'%';
         
         cardContainer.appendChild(date);
         cardContainer.appendChild(icon);
