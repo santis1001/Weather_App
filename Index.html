@@ -16,6 +16,11 @@
         rel="stylesheet"
         href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
         />
+        <script
+        src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+        integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+        crossorigin="anonymous"
+        ></script>
         <title>Weather App</title>
     
     </head>
@@ -50,41 +55,43 @@
                     </div>
                     <div class="p-2 mb-3">
                         <label class="form-label h4 fw-bold">5 Day Forecast:</label>
-                        <div class="row ">
-                            <div class="col m-1 bg-weather ">
+                        <div id="5day_cast" class="row ">
+                            <!-- <div class="col m-1 bg-weather">
                                 <h5 class="fw-bold">9/14/2022</h4>                                
-                                <i class="ms-3 my-3 fas fa-cloud-showers-heavy" style="font-size:36px"></i>                                    <h6>Temp:</h6>
+                                <img class="ms-3 " style="height: 75px; width: 75px;" src="https://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                <h6>Temp:</h6>
                                 <h6>Wind:</h6>
                                 <h6>Humidity:</h6>
                             </div>
                             <div class="col m-1 bg-weather">
                                 <h5 class="fw-bold">9/14/2022</h4>                                
-                                <i class="ms-3 my-3 fas fa-cloud-moon-rain	" style="font-size:36px"></i>
+                                <img class="ms-3 " style="height: 75px; width: 75px;" src="https://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                
                                 <h6>Temp:</h6>
                                 <h6>Wind:</h6>
                                 <h6>Humidity:</h6>
                             </div>
                             <div class="col m-1 bg-weather ">
                                 <h5 class="fw-bold">9/14/2022</h4>                                
-                                <i class="ms-3 my-3 fas fa-cloud-sun	" style="font-size:36px"></i>
-                                <h6>Temp:</h6>
+                                    <img class="ms-3 " style="height: 75px; width: 75px;" src="https://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                    <h6>Temp:</h6>
                                 <h6>Wind:</h6>
                                 <h6>Humidity:</h6>
                             </div>
                             <div class="col m-1 bg-weather ">
                                 <h5 class="fw-bold">9/14/2022</h4>                                
-                                <i class="ms-3 my-3 fas fa-cloud-sun-rain	" style="font-size:36px"></i>
-                                <h6>Temp:</h6>
+                                    <img class="ms-3 " style="height: 75px; width: 75px;" src="https://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                    <h6>Temp:</h6>
                                 <h6>Wind:</h6>
                                 <h6>Humidity:</h6>
                             </div>
                             <div class="col m-1 bg-weather ">
                                 <h5 class="fw-bold">9/14/2022</h4>                                
-                                <i class="ms-3 my-3 fas fa-cloud-sun " style="font-size:36px"></i>
+                                <img class="ms-3 " style="height: 75px; width: 75px;" src="https://openweathermap.org/img/wn/10d@2x.png" alt="">
                                 <h6>Temp:</h6>
                                 <h6>Wind:</h6>
                                 <h6>Humidity:</h6>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
