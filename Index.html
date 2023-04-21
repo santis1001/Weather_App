@@ -12,7 +12,12 @@
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
         crossorigin="anonymous"/>
         <link rel="stylesheet" href="./assets/css/style.css" />
+        <link
+        rel="stylesheet"
+        href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+        />
         <title>Weather App</title>
+    
     </head>
     <body>
         <header>
@@ -25,18 +30,13 @@
                 <div class="col-2">
                     <div class="p-2 mb-3">
                         <label for="exampleFormControlInput1" class="form-label h3 fw-bold">Search for a City:</label>
-                        <input type="search" class="form-control" id="search" placeholder="">
-                        <button type="button" class="mt-2 w-100 btn btn-primary disabled" >Search</button>
+                        <input type="text" class="form-control" id="search_bar" />
+                        <button id="search_btn" type="submit" class="mt-2 w-100 btn btn-primary disabled" >Search</button>
                     </div>
                     <hr>
                     <div class="p-2 mb-3 ">
                         <div id="buttonCity_list" class="d-grid gap-2">
-                            <button class="btn btn-secondary" type="button">Button</button>
-                            <button class="btn btn-secondary" type="button">Button</button>
-                            <button class="btn btn-secondary" type="button">Button</button>
-                            <button class="btn btn-secondary" type="button">Button</button>
-                            <button class="btn btn-secondary" type="button">Button</button>
-                            <button class="btn btn-secondary" type="button">Button</button>
+                            <button class="btn btn-secondary" type="button">Button</button> 
                         </div>
                     </div>
                 </div>     
@@ -90,8 +90,13 @@
                 </div>
             </div> 
         </main>        
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="script.js"></script>
+        <script src="./assets/js/papaparse.min.js"></script>       
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+        <script src="./assets/js/script.js"></script>
+
+        
 
     </body>
 </html>
