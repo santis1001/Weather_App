@@ -6,8 +6,8 @@ var appid = 'f5cf5cc638b6ea3d999d0a5599e54ea5'
 var mockAPI5 = './assets/js/mock_data5.json'
 var mockAPI1 = './assets/js/mock_data1.json'
 //API call address
-var webAPI5 = 'https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+appid+'&units=metric'
-var webAPI1 = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+appid+'&units=metric'
+//var webAPI5 = 'https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&appid='+appid+'&units=metric'
+//var webAPI1 = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+lon+'&appid='+appid+'&units=metric'
 
 //Initialize HTML elements variables
 var search_btn = document.getElementById('search_btn');
