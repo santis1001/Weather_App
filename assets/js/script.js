@@ -171,8 +171,8 @@ function search_fetch(input_data){
 //there are the API calls and the function method that will fetch the data
 function search_weather_info(city_info){
 
-    webAPI5 = 'https://api.openweathermap.org/data/2.5/forecast?lat='+city_info.lat+'&lon='+city_info.lng+'&appid='+appid+'&units=metric'
-    webAPI1 = 'https://api.openweathermap.org/data/2.5/weather?lat='+city_info.lat+'&lon='+city_info.lng+'&appid='+appid+'&units=metric'
+    webAPI5 = 'https://api.openweathermap.org/data/2.5/forecast?lat='+city_info.lat+'&lon='+city_info.lng+'&appid='+appid+'&units=metric';
+    webAPI1 = 'https://api.openweathermap.org/data/2.5/weather?lat='+city_info.lat+'&lon='+city_info.lng+'&appid='+appid+'&units=metric';
 
     // console.log(webAPI1);
     // console.log(webAPI5);
