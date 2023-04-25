@@ -17,6 +17,7 @@ $('#search_bar').on('click', function(event){search_param(event, 'bar') });
 
 var doc_btn_list = document.getElementById('buttonCity_list');
 
+var doc_cast = document.getElementById('cast');
 var doc_today_cast = document.getElementById('today_cast');
 var doc_5day_cast = document.getElementById('5day_cast');
 
@@ -185,15 +186,18 @@ function search_weather_info(city_info){
 //data it add the click event aswell
 function render_btn(){
     doc_btn_list.innerHTML = '';
+    doc_cast.setAttribute('style','display: block;');
 
     for(var i =0;i<btn_array.length;i++){
         var btn = document.createElement('button');
         btn.setAttribute('class','btn btn-secondary');
         btn.setAttribute('type', 'button');
-        btn.setAttribute('id',''+btn_array[i].name+'-'+btn_array[i].country);
+        const aux_name = btn_array[i].name;
+        const name = aux_name.replace(' ', "-");
+        btn.setAttribute('id',''+name+'-'+btn_array[i].country);
         btn.textContent = ''+btn_array[i].name+', '+btn_array[i].country;
         doc_btn_list.appendChild(btn);
-        $('#'+btn_array[i].name+'-'+btn_array[i].country).on('click', function(event){
+        $('#'+name+'-'+btn_array[i].country).on('click', function(event){
             event.preventDefault();
             console.log(event.target.innerText);
             search_fetch(event.target.innerText);
